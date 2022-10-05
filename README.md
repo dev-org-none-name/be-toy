@@ -1,3 +1,32 @@
+##
+
+```js
+
+// START
+npm run dev
+
+// Planetscale에 로그인
+pscale auth login
+
+// Planetscale에서 저희 DB에 접속
+pscale connect [DB_NAME]
+
+```
+
+---
+
+```js
+
+// prisma migrate, 스키마에서 모델의 모습을 수정 했을때 migrate를 해줘야 db에서 수정을 인식함
+npx prisma db push
+
+// 실시간으로 DB의 흐름을 보거나 수정 가능한 어드민 패널
+npx prisma studio
+
+```
+
+---
+
 | 구현 | 기능 설명                                |
 | ---- | ---------------------------------------- |
 | ❎   | Typescript 셋업                          |
