@@ -7,12 +7,9 @@ export const getUsersHandler = async (req: Request, res: Response) => {
 };
 
 export const postUsersHandler = async (req: Request, res: Response) => {
+  const data = req.body;
   await client.user.create({
-    data: {
-      userName: "문경민",
-      phone: 12345,
-      avatar: "기타맨 무사시",
-    },
+    data: { ...data },
   });
   return res.json({
     ok: true,
