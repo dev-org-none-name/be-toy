@@ -1,14 +1,17 @@
 import { Router } from "express";
+import { getMeHandler } from "@handlers/users/meHandler";
 import {
-  getMeHandler,
-  getUserHandler,
-  postUserHandler,
-} from "../handlers/users/userHandler";
+  getUsersHandler,
+  postUsersHandler,
+} from "@handlers/users/usersHandler";
+import { getUserHandler } from "@handlers/users/userHandler";
 
 const router = Router();
 
-router.get("/", getUserHandler);
-router.post("/", postUserHandler);
+router.get("/", getUsersHandler);
+router.post("/", postUsersHandler);
+
+router.get("/:id", getUserHandler);
 
 router.get("/me", getMeHandler);
 

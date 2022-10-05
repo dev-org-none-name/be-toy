@@ -1,21 +1,13 @@
 import client from "@libs/client";
+import { Request, Response } from "express";
 
-export const getUserHandler = async (req: any, res: any) => {
-  return res.send("여기는 Users!");
-};
-
-export const postUserHandler = async (req: any, res: any) => {
-  await client.user.create({
-    data: {
-      userName: "moon",
-      phone: 2232323,
+export const getUserHandler = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const queryId = Number(id);
+  const result = await client.user.findUnique({
+    where: {
+      id: queryId,
     },
   });
-  return res.json({
-    ok: true,
-  });
-};
-
-export const getMeHandler = async (req: any, res: any) => {
-  return res.send("여기는 ME!");
+  return res.send(result);
 };
