@@ -36,7 +36,7 @@ npx prisma studio
 | ❎   | Prisma 모델 스키마 생성 (User, Product)                              |
 | ❎   | 임시 라우터 설정과 GET POST 요청 관리                                |
 | ❎   | Planetscale에 연동과 실제 유저 생성 확인                             |
-| ❎   | 제품 생성시 유저와 왜레키 연동                                       |
+| ❎   | 제품 생성시 유저와 외래키 연동                                       |
 | 🔧   | 전체 오류 캐치 ✅ / 비동기 에러 ✅ / 404 에러 ❌ / 에러 상태 설명 ❌ |
 | ❌   | 디렉토리 구조 설계 의논                                              |
 | ❌   | Prisma와 Planetscale 설명                                            |
