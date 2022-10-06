@@ -1,8 +1,13 @@
 import { Router } from "express";
-import { getProductHandler } from "@handlers/products/productHandler";
+import {
+  getProductsHandler,
+  postProductsHandler,
+} from "@handlers/products/productHandler";
+import wrapAsyncController from "@libs/middleware";
 
 const router = Router();
 
-router.get("/", getProductHandler);
+router.get("/", getProductsHandler);
+router.post("/", wrapAsyncController(postProductsHandler));
 
 export default router;
