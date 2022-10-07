@@ -53,11 +53,19 @@ npx prisma studio
 │   ├── created (created time)
 │   ├── modified (last update time)
 ├── user
-│   ├── id          Int
+│   ├── id          String
+│   ├── username    String
+│   ├── password    String
 │   ├── avatar      String
-│   ├── userName    String
 │   ├── phone       Int
-│   └── product     Product[]
+│   ├── Token       Token[]
+│   └── Product     Product[]
+├── Token
+│   ├── id          String
+│   ├── username    String
+│   ├── revoked     Boolean
+│   ├── user        User
+│   └── userId      Int
 ├── Product
 │   ├── id          Int
 │   ├── image       String
