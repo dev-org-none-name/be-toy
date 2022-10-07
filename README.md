@@ -62,7 +62,7 @@ npx prisma studio
 │   └── Product     Product[]
 ├── Token
 │   ├── id          String
-│   ├── username    String
+│   ├── hashedToken String
 │   ├── revoked     Boolean
 │   ├── user        User
 │   └── userId      Int
