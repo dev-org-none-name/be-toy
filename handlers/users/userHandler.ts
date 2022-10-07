@@ -2,11 +2,10 @@ import client from "@libs/client";
 import { Request, Response } from "express";
 
 export const getUserHandler = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const queryId = Number(id);
+  const { id: username } = req.params;
   const result = await client.user.findUnique({
     where: {
-      id: queryId,
+      username,
     },
   });
   return res.send(result);

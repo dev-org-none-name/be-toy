@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import userRouter from "./routes/userRouter";
 import productRouter from "./routes/productRouter";
+import authRouter from "./routes/authRouter";
 
 dotenv.config();
 if (!process.env.PORT) process.exit(1);
@@ -20,6 +21,7 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 

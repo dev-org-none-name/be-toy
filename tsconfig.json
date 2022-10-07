@@ -7,7 +7,8 @@
     "baseUrl": ".",
     "paths": {
       "@libs/*": ["libs/*"],
-      "@handlers/*": ["handlers/*"]
+      "@handlers/*": ["handlers/*"],
+      "@service/*": ["service/*"]
     }
   }
 }

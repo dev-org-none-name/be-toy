@@ -1,6 +1,15 @@
+import client from "@libs/client";
 import { Request, Response } from "express";
 
-// 로그인 기능 생성후 사용가능
 export const getMeHandler = async (req: Request, res: Response) => {
-  return res.send("여기는 ME!");
+  const token = req.headers.cookie.replace("token=", "");
+  var base64Payload = token.split(".")[1];
+  var payload = Buffer.from(base64Payload, "base64");
+  var result = JSON.parse(payload.toString());
+  const me = await client.user.findUnique({
+    where: {
+      id: result["userId"],
+    },
+  });
+  res.json(me);
 };

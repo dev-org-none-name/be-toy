@@ -12,8 +12,7 @@ const router = Router();
 router.get("/", wrapAsyncController(getUsersHandler));
 router.post("/", wrapAsyncController(postUsersHandler));
 
-router.get("/:id", wrapAsyncController(getUserHandler));
-
 router.get("/me", wrapAsyncController(getMeHandler));
+router.get("/:id", wrapAsyncController(getUserHandler));
 
 export default router;

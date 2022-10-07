@@ -16,7 +16,7 @@ export const postProductsHandler = async (req: Request, res: Response) => {
       description: "물건의 대한 설명 물건의 대한 설명 물건의 대한 설명",
       user: {
         connect: {
-          id: 9,
+          id: "hi",
         },
       },
     },
