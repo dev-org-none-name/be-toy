@@ -10,6 +10,11 @@ export const getMeHandler = async (req: Request, res: Response) => {
     where: {
       id: result["userId"],
     },
+    select: {
+      username: true,
+      createdAt: true,
+      Product: true,
+    },
   });
   res.json(me);
 };

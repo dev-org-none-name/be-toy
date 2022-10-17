@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const { v4: uuidv4 } = require("uuid");
 const { findUserByUsername } = require("@service/userService");
-const { generateTokens } = require("@libs/jwt");
+const { generateTokens } = require("@libs/authentications/jwt");
 const { addRefreshTokenToWhitelist } = require("@service/tokenService");
 
 export const getLoginHandler = async (req: Request, res: Response) => {

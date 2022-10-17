@@ -1,7 +1,6 @@
 import client from "@libs/client";
-const { hashToken } = require("@libs/hashToken");
+const { hashToken } = require("@libs/authentications/hashToken");
 
-// used when we create a refresh token.
 function addRefreshTokenToWhitelist({ jti, refreshToken, userId }) {
   return client.token.create({
     data: {
@@ -12,7 +11,6 @@ function addRefreshTokenToWhitelist({ jti, refreshToken, userId }) {
   });
 }
 
-// used to check if the token sent by the client is in the database.
 function findRefreshTokenById(id) {
   return client.token.findUnique({
     where: {

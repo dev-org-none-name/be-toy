@@ -13,13 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use((err, req, res, next) => {
-  // 최후의 보루 에러방지 비동기 오류는 잡지 못함
-  res.status(500).send({
-    message: "Server Error",
-    error: err,
-  });
-});
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
