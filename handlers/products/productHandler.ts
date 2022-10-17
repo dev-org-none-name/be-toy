@@ -2,7 +2,14 @@ import client from "@libs/client";
 import { Request, Response } from "express";
 
 export const getProductsHandler = async (req: Request, res: Response) => {
-  const result = await client.product.findMany();
+  const result = await client.product.findMany({
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      description: true,
+    },
+  });
   return res.send(result);
 };
 
@@ -16,7 +23,7 @@ export const postProductsHandler = async (req: Request, res: Response) => {
       description: "물건의 대한 설명 물건의 대한 설명 물건의 대한 설명",
       user: {
         connect: {
-          id: "hi",
+          id: 1,
         },
       },
     },

@@ -10,7 +10,7 @@ export const getUserHandler = async (req: Request, res: Response) => {
     select: {
       username: true,
       createdAt: true,
-      Product: true,
+      product: true,
     },
   });
 
