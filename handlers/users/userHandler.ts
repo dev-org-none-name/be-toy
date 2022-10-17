@@ -7,6 +7,15 @@ export const getUserHandler = async (req: Request, res: Response) => {
     where: {
       username,
     },
+    select: {
+      username: true,
+      createdAt: true,
+      Product: true,
+    },
   });
+
+  if (result == null)
+    return res.status(404).send("해당하는 유저를 찾을 수 없습니다.");
+
   return res.send(result);
 };
