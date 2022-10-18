@@ -9,34 +9,70 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  product   Product[]
-  token     Token[]
+  id       Int     @id @default(autoincrement())
+  isAdmin  Boolean @default(false)
+  role     Role    @default(USER)
+  username String  @unique
+  password String
+  avatar   String
+  // link
+  Skill    Skill[]
+  Jobs     Jobs?   @relation(fields: [jobsId], references: [id])
+  jobsId   Int?
 }
 
-model Token {
-  id          String   @id @unique @default(uuid())
-  hashedToken String
-  revoked     Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
+model Skill {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  // link
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
 }
 
-model Product {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  image       String
-  name        String
-  price       Int
-  description String   @db.MediumText
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
+// ---------------------
+
+model Company {
+  id    Int     @id @default(autoincrement())
+  // link
+  Photo Photo[]
+}
+
+model Photo {
+  id        Int     @id @default(autoincrement())
+  url       String
+  // link
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId Int
+}
+
+// ---------------------
+
+model Jobs {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  deadlineAt  DateTime?
+  name        String     @unique
+  description String
+  // link
+  JobPhoto    JobPhoto[]
+  volunteers  User[]
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+}
+
+model JobPhoto {
+  id     Int    @id @default(autoincrement())
+  url    String
+  // link
+  job    Jobs   @relation(fields: [jobsId], references: [id])
+  jobsId Int
 }
