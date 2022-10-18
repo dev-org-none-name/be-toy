@@ -38,9 +38,11 @@ model Skill {
 // ---------------------
 
 model Company {
-  id    Int     @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String
   // link
-  Photo Photo[]
+  Photo       Photo[]
 }
 
 model Photo {
@@ -55,10 +57,10 @@ model Photo {
 
 model Jobs {
   id          Int        @id @default(autoincrement())
+  title       String
+  description String
   createdAt   DateTime   @default(now())
   deadlineAt  DateTime?
-  name        String     @unique
-  description String
   // link
   JobPhoto    JobPhoto[]
   volunteers  User[]
