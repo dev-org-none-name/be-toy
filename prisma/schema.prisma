@@ -11,28 +11,40 @@ datasource db {
 
 enum Role {
   USER
-  ADMIN
+  Recruiter
+}
+
+enum State {
+  STANDBY
+  FAILURE
+  ACCEPT
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  isAdmin  Boolean @default(false)
-  role     Role    @default(USER)
-  username String  @unique
+  role     Role     @default(USER)
+  id       Int      @id @default(autoincrement())
+  username String   @unique
   password String
-  avatar   String
-  // link
-  Skill    Skill[]
-  Jobs     Jobs?   @relation(fields: [jobsId], references: [id])
-  jobsId   Int?
+  email    String   @unique
+  phone    BigInt
+  avatar   String?
+  // Link
+  skills   Skill[] // nullable
+  process  Job[]    @relation("process") // nullable
+  favs     Job[]    @relation("favs") // nullable
+  company  Company?
+  // Reference
+  Resume   Resume[]
 }
 
 model Skill {
   id     Int    @id @default(autoincrement())
-  name   String @unique
-  // link
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int
+  skill  String @unique
+  // Reference
+  userId Int?
+  jobId  Int?
+  user   User?  @relation(fields: [userId], references: [id])
+  Job    Job?   @relation(fields: [jobId], references: [id])
 }
 
 // ---------------------
@@ -41,40 +53,66 @@ model Company {
   id          Int     @id @default(autoincrement())
   name        String  @unique
   description String
-  // link
-  Photo       Photo[]
+  // Link
+  Photo       Photo[] // nullable
+  // Reference
+  userId      Int     @unique
+  user        User    @relation(fields: [userId], references: [id])
 }
 
 model Photo {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   url       String
-  // link
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId Int
+  // Reference
+  companyId Int?
+  company   Company? @relation(fields: [companyId], references: [id])
 }
 
 // ---------------------
 
-model Jobs {
+model Job {
   id          Int        @id @default(autoincrement())
   title       String
   description String
+  address     String
   createdAt   DateTime   @default(now())
   deadlineAt  DateTime?
-  // link
-  JobPhoto    JobPhoto[]
-  volunteers  User[]
+  // Link
+  jobPhoto    JobPhoto[] // nullable
+  tag         Tag[] // nullable
+  skills      Skill[] // nullable
+  resume      Resume[]
+  // Reference
+  processId   Int?
+  favsId      Int?
+  process     User?      @relation("process", fields: [processId], references: [id])
+  favs        User?      @relation("favs", fields: [favsId], references: [id])
 }
 
-model Tag {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+model Resume {
+  id    Int   @id @default(autoincrement())
+  state State @default(STANDBY)
+
+  // Link
+  user   User? @relation(fields: [userId], references: [id])
+  // Reference
+  job    Job?  @relation(fields: [jobId], references: [id])
+  jobId  Int
+  userId Int?
 }
 
 model JobPhoto {
-  id     Int    @id @default(autoincrement())
-  url    String
-  // link
-  job    Jobs   @relation(fields: [jobsId], references: [id])
-  jobsId Int
+  id    Int    @id @default(autoincrement())
+  url   String
+  // Reference
+  jobId Int?
+  job   Job?   @relation(fields: [jobId], references: [id])
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  // Reference
+  jobId Int?
+  job   Job?   @relation(fields: [jobId], references: [id])
 }
