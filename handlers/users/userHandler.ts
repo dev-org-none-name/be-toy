@@ -8,14 +8,24 @@ export const getUserHandler = async (req: Request, res: Response) => {
       username,
     },
     select: {
+      role: true,
+      avatar: true,
       username: true,
-      createdAt: true,
-      product: true,
+      email: true,
+      phone: true,
+      skills: {
+        select: {
+          skill: true,
+        },
+      },
     },
   });
 
-  if (result == null)
-    return res.status(404).send("해당하는 유저를 찾을 수 없습니다.");
+  if (result == null) {
+    return res
+      .status(404)
+      .json({ statusCode: 404, error: "해당하는 유저를 찾을 수 없습니다." });
+  }
 
   return res.send(result);
 };

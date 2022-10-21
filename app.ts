@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
-app.use("companies", companyRouter);
+app.use("/companies", companyRouter);
 app.use("/jobs", jobRouter);
 
 app.use(function (req, res, next) {
