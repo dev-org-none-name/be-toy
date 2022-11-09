@@ -21,21 +21,21 @@ enum State {
 }
 
 model User {
-  role     Role     @default(USER)
-  id       Int      @id @default(autoincrement())
-  username String   @unique
+  role     Role       @default(USER)
+  id       Int        @id @default(autoincrement())
+  username String     @unique
   password String
-  email    String   @unique
+  email    String     @unique
   phone    String
   avatar   String?
   // Link
   skills   Skill[]
-  process  Job[]    @relation("process")
-  favs     Job[]    @relation("favs")
+  process  Job[]      @relation("process")
   company  Company?
   Token    Token[]
   // Reference
   Resume   Resume[]
+  Bookmark Bookmark[]
 }
 
 model Token {
@@ -61,16 +61,16 @@ model Skill {
 // ---------------------
 
 model Company {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
-  description String  @db.MediumText
-   
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  description String @db.MediumText
+
   // Link
-  jobs        Job[]
-  photos      Photo[]
+  jobs   Job[]
+  photos Photo[]
   // Reference
-  userId      Int     @unique
-  user        User    @relation(fields: [userId], references: [id])
+  userId Int     @unique
+  user   User    @relation(fields: [userId], references: [id])
 }
 
 model Photo {
@@ -95,12 +95,11 @@ model Job {
   tag         Tag[]
   skills      Skill[]
   resume      Resume[]
+  Bookmark    Bookmark[]
   // Reference
-  processId   Int?
-  favsId      Int?
   process     User?      @relation("process", fields: [processId], references: [id])
-  favs        User?      @relation("favs", fields: [favsId], references: [id])
   Company     Company?   @relation(fields: [companyId], references: [id])
+  processId   Int?
   companyId   Int?
 }
 
@@ -112,6 +111,16 @@ model Resume {
   jobId  Int
   user   User? @relation(fields: [userId], references: [id])
   userId Int?
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  userId    Int
+  jobId     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model JobPhoto {
