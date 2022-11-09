@@ -11,9 +11,26 @@ export const getMeHandler = async (req: Request, res: Response) => {
       id: result["userId"],
     },
     select: {
+      id: true,
+      role: true,
+      avatar: true,
       username: true,
-      createdAt: true,
-      product: true,
+      email: true,
+      phone: true,
+      company: {
+        select: {
+          id: true,
+          name: true,
+          jobs: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              createdAt: true,
+            },
+          },
+        },
+      },
     },
   });
   res.json(me);
