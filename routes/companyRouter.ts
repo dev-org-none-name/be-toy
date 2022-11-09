@@ -4,7 +4,6 @@ import {
   getCompaniesHandler,
   postCompaniesHandler,
 } from "@handlers/companies/companiesHandler";
-import { isAuthenticated } from "@libs/middlewares/isAuthenticated";
 
 const router = Router();
 

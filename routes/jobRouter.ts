@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getMeHandler } from "@handlers/users/meHandler";
+import { getJobsHandler, postJobsHandler } from "@handlers/jobs/jobsHandler";
 
 const router = Router();
 
-router.get("/", getMeHandler);
+router.get("/", getJobsHandler);
+router.post("/", postJobsHandler);
 
 export default router;

@@ -64,6 +64,7 @@ model Company {
   id          Int     @id @default(autoincrement())
   name        String  @unique
   description String  @db.MediumText
+   
   // Link
   jobs        Job[]
   photos      Photo[]

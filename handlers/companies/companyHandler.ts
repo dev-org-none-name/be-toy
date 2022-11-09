@@ -12,6 +12,13 @@ export const getCompanyHandler = async (req: Request, res: Response) => {
       userId: true,
       name: true,
       description: true,
+      jobs: {
+        select: {
+          id: true,
+          title: true,
+          deadlineAt: true,
+        },
+      },
       photos: {
         select: {
           url: true,

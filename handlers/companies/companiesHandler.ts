@@ -8,7 +8,12 @@ export const getCompaniesHandler = async (req: Request, res: Response) => {
       userId: true,
       name: true,
       description: true,
-      jobs: true,
+      jobs: {
+        select: {
+          id: true,
+          title: true,
+        },
+      },
       photos: {
         select: {
           url: true,
@@ -21,7 +26,6 @@ export const getCompaniesHandler = async (req: Request, res: Response) => {
 
 export const postCompaniesHandler = async (req: Request, res: Response) => {
   const data = req.body;
-
   try {
     await client.company.create({
       data: {
