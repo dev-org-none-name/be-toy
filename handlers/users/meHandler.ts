@@ -25,8 +25,9 @@ export const getMeHandler = async (req: Request, res: Response) => {
             select: {
               id: true,
               title: true,
-              description: true,
-              createdAt: true,
+              desc: true,
+              startAt: true,
+              endAt: true,
             },
           },
         },

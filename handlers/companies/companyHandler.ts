@@ -16,10 +16,11 @@ export const getCompanyHandler = async (req: Request, res: Response) => {
         select: {
           id: true,
           title: true,
-          deadlineAt: true,
+          startAt: true,
+          endAt: true,
         },
       },
-      photos: {
+      companyPhotos: {
         select: {
           url: true,
         },

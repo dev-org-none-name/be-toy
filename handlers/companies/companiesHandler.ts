@@ -1,5 +1,6 @@
 import client from "@libs/client";
 import { Request, Response } from "express";
+const jwt = require("jsonwebtoken");
 
 export const getCompaniesHandler = async (req: Request, res: Response) => {
   const result = await client.company.findMany({
@@ -14,7 +15,7 @@ export const getCompaniesHandler = async (req: Request, res: Response) => {
           title: true,
         },
       },
-      photos: {
+      companyPhotos: {
         select: {
           url: true,
         },
@@ -25,16 +26,37 @@ export const getCompaniesHandler = async (req: Request, res: Response) => {
 };
 
 export const postCompaniesHandler = async (req: Request, res: Response) => {
-  const data = req.body;
+  const {
+    params: { id },
+    headers: { cookie },
+  } = req;
+
+  const token = cookie.split("token=")[1];
+  const userId = jwt.decode(token)["userId"];
+  const findUser = await client.user.findFirst({
+    where: {
+      id: +userId,
+    },
+  });
+
   try {
+    await client.user.update({
+      where: {
+        id: +userId,
+      },
+      data: {
+        role: "Recruiter",
+      },
+    });
     await client.company.create({
       data: {
-        name: "회사명",
+        name: "크래프트",
         description:
-          "하이케어넷(구.인성정보 헬스케어사업부)는 16년간 국/내외 Healthcare사업을 수행해 온 ㈜인성정보의 헬스케어사업부가 2020년 분할되어 설립된 회사입니다.",
+          "크래프트는 16년간 국/내외 Healthcare사업을 수행해 온 ㈜인성정보의 헬스케어사업부가 2020년 분할되어 설립된 회사입니다.",
         userId: 1,
       },
     });
+
     return res.json({
       ok: true,
     });

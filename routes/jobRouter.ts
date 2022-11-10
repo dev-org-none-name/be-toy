@@ -5,7 +5,6 @@ import {
   postBookmarkHandler,
 } from "@handlers/jobs/bookmarkHandler";
 import { getJobHandler } from "@handlers/jobs/jobHandler";
-import { isAuthenticated } from "@libs/middlewares/isAuthenticated";
 
 const router = Router();
 

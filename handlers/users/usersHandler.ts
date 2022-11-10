@@ -9,6 +9,12 @@ export const getUsersHandler = async (req: Request, res: Response) => {
       username: true,
       email: true,
       phone: true,
+      company: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
   });
   return res.send(result);

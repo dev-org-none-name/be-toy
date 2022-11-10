@@ -13,11 +13,6 @@ export const getUserHandler = async (req: Request, res: Response) => {
       username: true,
       email: true,
       phone: true,
-      skills: {
-        select: {
-          skill: true,
-        },
-      },
     },
   });
 

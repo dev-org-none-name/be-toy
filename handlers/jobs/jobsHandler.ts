@@ -6,7 +6,7 @@ export const getJobsHandler = async (req: Request, res: Response) => {
     select: {
       id: true,
       title: true,
-      address: true,
+      desc: true,
     },
   });
   return res.send(result);
@@ -19,8 +19,11 @@ export const postJobsHandler = async (req: Request, res: Response) => {
       data: {
         companyId: 1,
         title: "[크래프트]UX/UI 개발자 채용",
-        description: "경력은 2년 이상",
-        address: "부천시 중동로 54220-12",
+        desc: "경력은 2년 이상",
+        createAt: "2022-10-25T13:38:00Z",
+        startAt: "2022-10-25T13:38:00Z",
+        endAt: "2022-10-25T13:38:00Z",
+        isClosed: false,
       },
     });
     return res.json({
