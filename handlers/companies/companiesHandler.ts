@@ -1,3 +1,4 @@
+import getLoginUserId from "@libs/authentications/getLoginUserId";
 import client from "@libs/client";
 import { Request, Response } from "express";
 const jwt = require("jsonwebtoken");
@@ -28,21 +29,20 @@ export const getCompaniesHandler = async (req: Request, res: Response) => {
 export const postCompaniesHandler = async (req: Request, res: Response) => {
   const {
     params: { id },
-    headers: { cookie },
   } = req;
 
-  const token = cookie.split("token=")[1];
-  const userId = jwt.decode(token)["userId"];
+  const loginUserId = getLoginUserId(req);
+
   const findUser = await client.user.findFirst({
     where: {
-      id: +userId,
+      id: loginUserId,
     },
   });
 
   try {
     await client.user.update({
       where: {
-        id: +userId,
+        id: loginUserId,
       },
       data: {
         role: "Recruiter",

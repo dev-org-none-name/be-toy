@@ -1,33 +1,36 @@
+import getLoginUserId from "@libs/authentications/getLoginUserId";
 import client from "@libs/client";
 import { Request, Response } from "express";
 
 export const getJobsHandler = async (req: Request, res: Response) => {
-  const result = await client.job.findMany({
+  const loginUserId = getLoginUserId(req);
+
+  const jobs = await client.job.findMany({
     select: {
       id: true,
+      companyId: true,
       title: true,
       desc: true,
     },
   });
-  return res.send(result);
+
+  if (jobs == null)
+    return res.status(404).send("해당하는 공고를 찾을 수 없습니다.");
+  return res.json({ jobs });
 };
 
 export const postJobsHandler = async (req: Request, res: Response) => {
-  const data = req.body;
   try {
     await client.job.create({
       data: {
         companyId: 1,
-        title: "[크래프트]UX/UI 개발자 채용",
-        desc: "경력은 2년 이상",
+        title: "[크래프트]백엔드 채용",
+        desc: "경력은 1년 이상",
         createAt: "2022-10-25T13:38:00Z",
         startAt: "2022-10-25T13:38:00Z",
         endAt: "2022-10-25T13:38:00Z",
         isClosed: false,
       },
-    });
-    return res.json({
-      ok: true,
     });
   } catch (e) {
     return res.status(400).json({

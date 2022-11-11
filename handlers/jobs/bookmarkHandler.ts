@@ -1,3 +1,4 @@
+import getLoginUserId from "@libs/authentications/getLoginUserId";
 import client from "@libs/client";
 import { Request, Response } from "express";
 const jwt = require("jsonwebtoken");
@@ -9,15 +10,12 @@ export const getBookmarkHandler = async (req: Request, res: Response) => {
 export const postBookmarkHandler = async (req: Request, res: Response) => {
   const {
     params: { id },
-    headers: { cookie },
   } = req;
-
-  const token = cookie.split("token=")[1];
-  const userId = jwt.decode(token)["userId"];
+  const loginUserId = getLoginUserId(req);
 
   const alreadyExists = await client.bookmark.findFirst({
     where: {
-      userId: +userId,
+      userId: loginUserId,
       jobId: +id,
     },
   });
@@ -33,7 +31,7 @@ export const postBookmarkHandler = async (req: Request, res: Response) => {
       data: {
         user: {
           connect: {
-            id: userId,
+            id: loginUserId,
           },
         },
         job: {
